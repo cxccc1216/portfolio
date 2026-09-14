@@ -377,7 +377,7 @@ footer{border-top:1px solid var(--line);padding:44px 0;margin-top:40px}
 
   <div class="hero-stats" id="stats">
     <div class="stat"><div class="num" data-count="0">0</div><div class="lbl">已收录作品</div></div>
-    <div class="stat"><div class="num">6</div><div class="lbl">作品分类</div></div>
+    <div class="stat"><div class="num">7</div><div class="lbl">作品分类</div></div>
     <div class="stat"><div class="num" id="toolCount">7</div><div class="lbl">AI 工具栈</div></div>
     <div class="stat"><div class="num"><em>∞</em></div><div class="lbl">灵感上限</div></div>
   </div>
@@ -391,7 +391,7 @@ footer{border-top:1px solid var(--line);padding:44px 0;margin-top:40px}
         <div class="sec-kicker">Works</div>
         <h2 class="sec-title">作品档案</h2>
       </div>
-      <p class="sec-desc">按类型分门别类，点击分类卡片可查看该类别下的全部作品。目前档案库刚开张，作品陆续入库中。</p>
+      <p class="sec-desc">按类型分门别类，点击分类卡片可查看该类别下的全部作品。作品按类别持续入库中。</p>
     </div>
     <div class="bento" id="bento">
       <!-- JS 渲染 -->
@@ -512,6 +512,7 @@ const CATEGORIES = [
   { key:'ppt',    name:'PPT',    desc:'演示文稿与汇报模板，观点可视化呈现',  icon:'M5 3h14v14H5z M5 8h14 M5 12h14 M9 21h6 M12 17v4', },
   { key:'web',    name:'网页',   desc:'落地页、工具页、交互原型等在线作品',  icon:'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z M3 12h18 M12 3c2.5 2.6 3.8 5.8 3.8 9S14.5 18.4 12 21', },
   { key:'tool',   name:'工具',   desc:'自动化脚本、小应用、效率工具',       icon:'M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-2.4z', },
+  { key:'ecom',   name:'电商',   desc:'拼多多店铺运营：起店流程、投流推广与引流玩法', icon:'M6 8h12l-1 12H7L6 8z M9 8V6a3 3 0 0 1 6 0v2', },
 ];
 
 /* 已收录作品：示例格式：
@@ -523,6 +524,10 @@ const WORKS = [
   { name:'像素画布 Pixel Canvas', type:'tool', date:'2026-08-11', tool:'React 19 + Vite', link:'https://cxccc1216.github.io/pixel-canvas/', status:'已归档', desc:'自由绘制 + 图片一键转像素的开源画图工具' },
   { name:'采购交期跟踪台', type:'tool', date:'2026-08-26', tool:'单文件 HTML', link:'https://cxccc1216.github.io/procurement-tracker/', status:'已归档', desc:'采购订单交期与供应商管理，本地数据自动备份' },
   { name:'AI 开源周报台账', type:'doc', date:'2026-09-10', tool:'腾讯文档', link:'https://docs.qq.com/sheet/DS3VMcmRKbGZjZmZ3', status:'已完成', desc:'每周自动登记 AI 开源项目的检索台账，按用途分类与上手难度整理' },
+  { name:'拼多多从零起店 SOP', type:'ecom', date:'2026-09-14', tool:'WorkBuddy AI', link:'', status:'已归档', desc:'开工定项、类目筛选、货源选品、上架准备、破零节奏与首月时间表' },
+  { name:'拼多多投流推广实战手册', type:'ecom', date:'2026-09-14', tool:'WorkBuddy AI', link:'', status:'已归档', desc:'重点篇：推广工具三分类、起量四步法、数据诊断表与 ROI 提升三条路径' },
+  { name:'拼多多引流玩法与增长思路', type:'ecom', date:'2026-09-14', tool:'WorkBuddy AI', link:'', status:'已归档', desc:'免费流量、活动玩法、直播与达人、站外引流、私域复购与按预算分档打法' },
+  { name:'投流盈亏计算器', type:'ecom', date:'2026-09-14', tool:'单文件 HTML', link:'', status:'已归档', desc:'输入成本与退货损耗，算出每单最大可推广费、保本 ROI 与 ROI 敏感度表' },
 ];
 /* 参与展示与统计的作品（排除本站自身） */
 const SHOWN_WORKS = WORKS.filter(w=>!w.self);
