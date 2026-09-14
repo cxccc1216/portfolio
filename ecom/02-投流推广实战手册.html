@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>拼多多投流推广实战手册 · AI 作品集</title>
+<style>
+:root{
+  --bg:#fbfbfa; --line:#e8e6e1; --text:#26241f; --dim:#6b6a64;
+  --accent:#c25f38; --code-bg:#f5f3ef;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.85;-webkit-font-smoothing:antialiased;
+}
+.topbar{
+  position:sticky;top:0;z-index:10;
+  background:rgba(251,251,250,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  padding:12px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;
+}
+.topbar a{color:var(--dim);text-decoration:none;transition:color .2s}
+.topbar a:hover{color:var(--accent)}
+.tag{border:1px solid var(--line);border-radius:999px;padding:3px 12px;font-size:12.5px;color:var(--accent);white-space:nowrap}
+main{max-width:840px;margin:0 auto;padding:52px 24px 100px}
+h1{font-size:30px;line-height:1.32;margin:0 0 10px;font-weight:800;letter-spacing:-.01em}
+h2{font-size:23px;margin:54px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line);font-weight:700}
+h3{font-size:18px;margin:36px 0 12px;font-weight:700}
+h4{font-size:16px;margin:26px 0 10px;font-weight:700}
+p{margin:0 0 18px}
+ul,ol{margin:0 0 18px;padding-left:24px}
+li{margin-bottom:8px}
+strong{font-weight:700}
+a{color:var(--accent)}
+blockquote{
+  margin:0 0 22px;padding:14px 20px;background:#fff;border-left:3px solid var(--accent);
+  border-radius:0 8px 8px 0;color:var(--dim);
+}
+blockquote p:last-child{margin-bottom:0}
+code{background:var(--code-bg);border-radius:5px;padding:2px 6px;font-size:.9em;
+  font-family:ui-monospace,Consolas,Monaco,monospace}
+pre{background:#2b2a26;color:#f2efe9;border-radius:10px;padding:18px 20px;overflow:auto;margin:0 0 22px}
+pre code{background:none;color:inherit;padding:0;font-size:13.5px;line-height:1.75}
+table{width:100%;border-collapse:collapse;margin:0 0 24px;font-size:14.5px;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:10px 14px;text-align:left;vertical-align:top}
+th{background:#f5f3ef;font-weight:700;white-space:nowrap}
+hr{border:none;border-top:1px solid var(--line);margin:46px 0}
+footer{border-top:1px solid var(--line);padding:30px 24px;text-align:center;color:var(--dim);font-size:13.5px}
+footer a{color:var(--accent)}
+@media(max-width:640px){
+  main{padding:34px 18px 64px}
+  h1{font-size:25px} h2{font-size:20px}
+  .topbar{padding:11px 16px}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="../index.html">← 返回作品集</a>
+  <span class="tag">电商</span>
+</div>
+<main>
+<h1>拼多多投流推广实战手册</h1>
+<blockquote>
+<p>这是三份文档里最该反复看的一份。<br />
+涉及具体金额、比例的地方，我给的是<strong>参考区间</strong>，你要用自己的类目数据去校准。平台推广产品的名字和门槛变化很快，文中按<strong>功能分类</strong>讲，你后台叫什么名字不重要，对得上逻辑就行。</p>
+</blockquote>
+<hr />
+<h2>0. 先把一件事想明白：投流到底在买什么</h2>
+<p><strong>投流买的是曝光，不是销量。</strong></p>
+<p>平台收你的钱，给的是"让更多人看到你的商品"。至于看到之后买不买，取决于你的主图和价格。所以：</p>
+<blockquote>
+<p><strong>图不行、价不行，投流就是把钱扔进水里。</strong></p>
+</blockquote>
+<p>这句话的实践含义是：<strong>推广出问题的时候，第一反应不应该是"调出价"，而是"看图和价"。</strong> 新手 80% 的推广亏损，根子都在图和价，不在出价技巧。</p>
+<h3>核心公式（整个手册都围绕它）</h3>
+<pre><code>ROI = 成交金额 ÷ 推广花费
+    = (曝光量 × 点击率 × 转化率 × 客单价) ÷ 推广花费
+</code></pre>
+<p>这个式子的左侧是你考核的指标，右侧是<strong>你能动手的四个变量</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>谁来管</th>
+<th>优化手段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>曝光量</td>
+<td>出价、预算、定向</td>
+<td>加价、放宽人群、加预算</td>
+</tr>
+<tr>
+<td>点击率 CTR</td>
+<td>主图、价格、标题</td>
+<td>改图、改价</td>
+</tr>
+<tr>
+<td>转化率 CVR</td>
+<td>详情页、评价、价格、服务</td>
+<td>改详情、积累评价、调价</td>
+</tr>
+<tr>
+<td>客单价</td>
+<td>SKU 结构、搭配、满减</td>
+<td>加套装、设满减</td>
+</tr>
+</tbody>
+</table>
+<p><strong>记牢这张表。</strong> 后面所有诊断，最后都会落到"这四个变量里，哪个出问题了"。</p>
+<hr />
+<h2>1. 推广工具的三大类型（按功能分类）</h2>
+<p>不管你后台看到的按钮叫什么，推广工具就三种逻辑。</p>
+<h3>1.1 搜索型——"人找货"</h3>
+<p><strong>原理</strong>：顾客搜关键词，你竞价买关键词下的展示位。</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>流量精准，因为顾客已经明确想买这个东西</li>
+<li>可控性强，你能精确知道你为哪个词花了多少钱</li>
+<li>量级有限，受这个词的搜索量天花板限制</li>
+<li>转化率通常最高，但点击成本也高</li>
+</ul>
+<p><strong>适合</strong>：有明确搜索需求的品（日用品、配件、有确定型号的标品）、新店起步、有精准长尾词的类目。</p>
+<p><strong>新手建议从这里开始</strong>，因为它最可控，数据最好读，能帮你快速搞清楚"我的图和价到底行不行"。</p>
+<p><strong>要盯的数据</strong>：每个关键词的曝光量、点击率、点击成本、转化率、花费产出比。</p>
+<p><strong>核心动作</strong>：<strong>加词、删词、调词价</strong>。</p>
+<ul>
+<li>有曝光没点击 → 图的问题，或者词不精准</li>
+<li>有点击没转化 → 价的问题，或者详情页/评价的问题</li>
+<li>有转化但产出低于目标 → 降这个词的出价，或者提高客单</li>
+<li>花钱多不出单的词 → 直接删</li>
+</ul>
+<h3>1.2 推荐型／信息流——"货找人"</h3>
+<p><strong>原理</strong>：系统根据人群标签，把你的商品推给可能感兴趣的人，出现在信息流、猜你喜欢等位置。</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>量大，天花板比搜索高得多</li>
+<li>点击成本通常低</li>
+<li>精准度差，转化率通常低于搜索</li>
+<li>对<strong>主图的视觉冲击力</strong>要求极高，因为顾客是"被吸引"而不是"主动找"</li>
+</ul>
+<p><strong>适合</strong>：视觉冲击强的品（有设计感、有对比效果、能一眼看出用途）、冲动消费品、客单价中等偏低的品。</p>
+<p><strong>要盯的数据</strong>：人群包的点击率和转化率、不同场景位的表现差异。</p>
+<p><strong>核心动作</strong>：<strong>调人群、调场景、换图</strong>。</p>
+<ul>
+<li>某个年龄段/人群包花钱不出单 → 屏蔽或降价</li>
+<li>某个展示位数据特别好 → 加大投放</li>
+<li>整体点击率低 → <strong>换图，不是调价</strong></li>
+</ul>
+<h3>1.3 智能托管型——"系统帮你花"</h3>
+<p><strong>原理</strong>：你设一个目标产出比（或类似目标），系统自动出价、自动分配流量。</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>省心，不用天天盯</li>
+<li>适合已经跑通、数据稳定的款</li>
+<li>黑盒，你很难知道钱具体花在哪里</li>
+<li><strong>冷启动期不好用</strong>，因为系统没有你的数据，它不知道该找谁</li>
+</ul>
+<p><strong>适合</strong>：已经验证过的爆款放量、没时间天天盯计划的阶段。</p>
+<p><strong>注意</strong>：智能托管是"放大器"，不是"起搏器"。<strong>没有数据积累的款，别交给它。</strong></p>
+<h3>1.4 三种工具的配合逻辑</h3>
+<p><strong>新店起步期</strong>：搜索型为主（搞清数据和转化），推荐型小预算测试（试图）</p>
+<p><strong>跑通之后</strong>：搜索型稳住基本盘，推荐型放量拉大盘</p>
+<p><strong>稳定期</strong>：智能托管解放精力，人工盯头部计划</p>
+<p><strong>大促／活动期</strong>：三种一起上，冲排名</p>
+<hr />
+<h2>2. 起量四步法（核心操作流程）</h2>
+<p><strong>这是全篇最重要的一章。</strong> 顺序不能乱，跳步骤一定亏钱。</p>
+<h3>第一步：测图（3—5 天，极低预算）</h3>
+<p><strong>目的</strong>：找到点击率最高的主图。<strong>这是投流里性价比最高的一件事。</strong></p>
+<p><strong>为什么必须先测图</strong>：同样的曝光，CTR 从 1% 提到 2%，你的流量直接翻倍，成本不变。<strong>这是唯一能"免费"提升效果的操作。</strong></p>
+<p><strong>怎么测</strong>：</p>
+<ol>
+<li>准备 2—4 张差异明显的主图（不是微调字色，是<strong>整体构图和卖点表达不同</strong>）</li>
+<li>用搜索型工具开一个小预算计划，或者用同一商品建多个推广单元，各挂一张图</li>
+<li>预算压到最低，跑到每张图都有几百次曝光</li>
+</ol>
+<p><strong>判断标准</strong>：</p>
+<ul>
+<li>有差异显著的那张最好 → 换上去</li>
+<li>数据差不多 → 说明图都没抓住点，回去重新想卖点，别将就</li>
+<li><strong>看点击率，不看转化率</strong>（这个阶段样本太小，转化数据不可信）</li>
+</ul>
+<p><strong>关键纪律：测图期间不要改价、不要改标题、不要改详情页。</strong> 同时改多个变量，你就不知道是哪个起了作用。</p>
+<h3>第二步：测款（3—7 天）</h3>
+<p><strong>目的</strong>：判断这个款值不值得投入。</p>
+<p><strong>怎么测</strong>：用最低预算跑，重点看三个数：</p>
+<ol>
+<li><strong>加购率和收藏率</strong>——有兴趣但还没决定，是转化的前置信号</li>
+<li><strong>转化率</strong>——横向和你的其他款比，和自己类目的整体水平比</li>
+<li><strong>退款率</strong>——这个最容易被忽略，但决定了你长期赚不赚钱</li>
+</ol>
+<p><strong>判断标准（参考，必须用自己类目校准）</strong>：</p>
+<ul>
+<li>转化率明显高于店内其他款 → 主推</li>
+<li>转化率一般但加购率高 → 可能是价格问题，试着调价再看</li>
+<li>退款率异常高（显著高于同行）→ <strong>别推了</strong>，先解决产品问题。推广一个高退货率的款，等于花钱买退货</li>
+</ul>
+<p><strong>这里的判断逻辑要清楚</strong>：测款不是为了"证明我的款好"，是为了"淘汰掉不行的款"。<strong>敢于砍款，是新手到老手的分水岭。</strong></p>
+<h3>第三步：放量（跑通之后）</h3>
+<p><strong>怎么放</strong>：</p>
+<ul>
+<li><strong>预算递增用"爬楼梯"，不要"跳楼"</strong>：每 2—3 天涨 20%—50%，观察产出比有没有守住</li>
+<li><strong>不要一次翻倍</strong>：预算突然翻倍，系统会把你推到更宽泛的人群，转化率必然下降</li>
+<li>加到产出比开始明显下滑，就退回上一档，停在那里</li>
+</ul>
+<p><strong>放量时最容易犯的错</strong>：产出比一好就加大预算，结果崩了，然后慌，然后降价，然后全乱。<strong>记住：加预算必然带来效率下降，这是正常的。问题是下降到什么程度你能接受。</strong></p>
+<p><strong>纪律</strong>：提前写下你的"目标产出比底线"，跌破了就退回上一档。<strong>不要在情绪里做决策。</strong></p>
+<h3>第四步：优化（长期持续）</h3>
+<p><strong>优化的顺序永远是：先看哪一段出问题，再动手。</strong></p>
+<pre><code>曝光不够 → 加价 / 放宽定向 / 加预算
+点击不够 → 改图（几乎永远是图的问题）
+转化不够 → 改价 / 补评价 / 改详情页
+客单不够 → 加套装 / 设满减 / 调 SKU 结构
+</code></pre>
+<p><strong>每次只动一个变量，动完等 3 天。</strong> 这条纪律能帮你省下大量冤枉钱。</p>
+<hr />
+<h2>3. 出价与预算的实操规则</h2>
+<h3>3.1 冷启动期（前 3—7 天）</h3>
+<p><strong>目标不是赚钱，是拿到数据。</strong></p>
+<ul>
+<li>出价可以比你的目标成本略高一点，目的是<strong>先让计划跑起来</strong>。跑不起来的计划，你连诊断的机会都没有</li>
+<li>预算设小，宁可跑完再加，也不要一次给大</li>
+<li>别关计划关得太快。<strong>新计划有学习期，第一天数据差是正常的</strong>，至少给它 2—3 天</li>
+</ul>
+<p><strong>新手最常见的错误</strong>：开计划 → 两小时没出单 → 关掉 → 再开一个新计划 → 循环。<strong>这是最烧钱的做法</strong>，因为每次都在给系统交"学习成本"，从来没有积累。</p>
+<h3>3.2 稳定期</h3>
+<ul>
+<li>逐步把出价往下压，压到产出比刚好在目标线上</li>
+<li><strong>一天调整不超过 2 次</strong>，每次幅度别太大</li>
+<li>转化稳定的计划<strong>不要乱动</strong>。手痒是运营最大的敌人——数据好的时候动作越少越好</li>
+</ul>
+<h3>3.3 什么时候该加价</h3>
+<ul>
+<li>曝光明显不足，且图和数据都验证过没问题</li>
+<li>有转化，但流量上不去，明显被出价卡住了</li>
+<li>大促或活动窗口期，需要抢量</li>
+</ul>
+<h3>3.4 什么时候该降价</h3>
+<ul>
+<li>花费一直在涨，产出没跟上</li>
+<li>某个词的点击成本高得离谱，但转化一般</li>
+<li>目标是保利润，不是冲量</li>
+</ul>
+<h3>3.5 什么时候必须停（红线）</h3>
+<ul>
+<li><strong>连续 3 天产出比远低于目标，且改图调价都没效果</strong> → 停，回去重新看产品和定价</li>
+<li><strong>退款率异常高</strong> → 停，产品问题不解决，推得越多亏得越多</li>
+<li><strong>库存不足</strong> → 停，别推广一个发不出货的商品（会被罚）</li>
+<li><strong>数据完全没起色（曝光都跑不出去）</strong> → 停，重新检查商品本身有没有问题（是否被限流、类目是否放错）</li>
+</ul>
+<hr />
+<h2>4. 人群与定向</h2>
+<h3>4.1 基本逻辑</h3>
+<p>系统给你的人群包，本质上是按"行为 + 属性"划分的。你要做的是<strong>用钱去投票</strong>：哪个包出单多，就给它更多预算。</p>
+<h3>4.2 实操方法</h3>
+<ol>
+<li><strong>先宽后窄</strong>：一开始不要设太细的限制，让系统自己找。跑出数据后，再把不出单的人群屏蔽掉</li>
+<li><strong>看"点击率"和"转化率"两个数</strong>：<br />
+   - 点击率高、转化率低 → 人是对的，但你的商品没说服他（图或价的问题）<br />
+   - 点击率低、转化率高 → 人对、图不行，或者这个人本来就想买（值得加价）<br />
+   - 两个都低 → 这个人群直接砍掉</li>
+<li><strong>老客人群</strong>：复购型产品要单独做老客定向，成本比拉新低很多</li>
+<li><strong>竞品人群</strong>：平台一般会有类似"竞品访客"的定向，这类人群购买意图明确，值得试</li>
+</ol>
+<h3>4.3 一个反直觉的建议</h3>
+<p><strong>别迷信"精准人群"。</strong> 新店最大的问题是量不够，太精准意味着量小、跑不动、数据样本不足、没法优化。<strong>新店的第一阶段，宁可要"粗糙但量大"的流量，也不要"精准但跑不动"的流量。</strong> 量跑起来之后，再逐步收窄。</p>
+<hr />
+<h2>5. 数据诊断表（遇到问题直接查这张表）</h2>
+<table>
+<thead>
+<tr>
+<th>症状</th>
+<th>最可能的原因</th>
+<th>怎么办</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>计划跑不出曝光</td>
+<td>出价太低 / 商品权重太低 / 定向太窄</td>
+<td>先加价，再加宽定向；都不行就说明链接本身有问题</td>
+</tr>
+<tr>
+<td>曝光多但点击率极低</td>
+<td><strong>主图不行</strong>（90% 是这个）</td>
+<td>换图，别调价</td>
+</tr>
+<tr>
+<td>点击率高但不转化</td>
+<td>价格没竞争力 / 评价太少 / 详情页没说清</td>
+<td>看竞品价格、补评价、改详情</td>
+</tr>
+<tr>
+<td>前两天好，第三天突然崩</td>
+<td>计划进入衰退 / 竞品降价 / 你改了东西</td>
+<td>先回想改了什么，再对比竞品</td>
+</tr>
+<tr>
+<td>转化率忽高忽低</td>
+<td>流量来源不稳 / 人群包太杂</td>
+<td>收窄定向，让流量结构稳定下来</td>
+</tr>
+<tr>
+<td>投产比一直上不去</td>
+<td>客单价太低 / 成本结构不合理</td>
+<td>提客单（套装、满减），或重新算成本</td>
+</tr>
+<tr>
+<td>花钱快但单量少</td>
+<td>点击成本虚高</td>
+<td>检查关键词，砍掉高成本低转化的词</td>
+</tr>
+<tr>
+<td>退款率异常高</td>
+<td>图与实物不符 / 规格误解 / 质量问题</td>
+<td>停止推广这个款，先解决问题</td>
+</tr>
+<tr>
+<td>老客不复购</td>
+<td>产品本身没有复购属性 / 缺少触达手段</td>
+<td>见《引流玩法》第 6 章</td>
+</tr>
+<tr>
+<td>全站数据都在掉</td>
+<td>店铺权重出问题 / 大类目流量变化</td>
+<td>检查发货时效、纠纷率、差评，看类目大盘</td>
+</tr>
+</tbody>
+</table>
+<p><strong>用法</strong>：数据出问题的时候，不要凭感觉，<strong>先在下滑位置归类，再动手</strong>。</p>
+<hr />
+<h2>6. ROI 提升的三条路径（数学拆解）</h2>
+<p>从公式看，提升产出比只有三条路。<strong>每条路的具体动作不一样，先判断自己该走哪条。</strong></p>
+<h3>路径一：提高点击率（最便宜的一条路）</h3>
+<p><strong>为什么最便宜</strong>：改图的成本几乎为零，效果立竿见影。</p>
+<p><strong>具体动作</strong>：</p>
+<ul>
+<li>第 1 张主图只讲<strong>一个</strong>最强卖点，不要堆</li>
+<li>加对比（前后对比、用法对比、"别人家 VS 我们家"）</li>
+<li>用明确的数字和结果（"能用 3 年""一次搞定"），但<strong>不能虚假宣传</strong></li>
+<li>换个角度看：如果同行都在摆拍，你用真实使用场景，反而更抓眼</li>
+<li><strong>测图，测图，测图</strong>。这是唯一能客观判断的方法</li>
+</ul>
+<p><strong>判断标准</strong>：改完之后 CTR 有没有明显上升。没有上升就说明改错了方向，继续试下一个。</p>
+<h3>路径二：提高转化率</h3>
+<p><strong>具体动作</strong>（按性价比排序）：</p>
+<ol>
+<li><strong>补评价</strong>（最有效）：新链接 5—10 个真实好评，转化率能有质的提升</li>
+<li><strong>调价</strong>：对比前 3 名竞品，如果贵了就降，如果一样就要靠别的东西取胜</li>
+<li><strong>改详情页</strong>：把顾客最常问的三个问题，直接在详情页回答掉</li>
+<li><strong>强化服务承诺</strong>：比如清晰写清退换规则、发货时效</li>
+<li><strong>优化规格说明</strong>：减少"买错规格"导致的退货</li>
+</ol>
+<p><strong>注意</strong>：转化率是最难提的一项，因为它是产品力的直接体现。<strong>如果试完这些还是不转化，问题可能在这个产品本身，不在运营技巧。</strong></p>
+<h3>路径三：提高客单价</h3>
+<p><strong>这是被最多人忽略的一条路。</strong></p>
+<p>同样的流量，同样的推广花费，客单价从 30 提到 45，产出比直接提升 50%，而且<strong>不额外花一分推广费</strong>。</p>
+<p><strong>具体动作</strong>：</p>
+<ul>
+<li><strong>加套装</strong>：单件 → 两件装 → 家庭装。套装的价值是让顾客觉得"更划算"</li>
+<li><strong>设满减/满赠</strong>：把门槛设在略高于平均客单价的位置，比如平均客单 40，门槛设 59</li>
+<li><strong>SKU 引导</strong>：把利润款的 SKU 放在中间位置，配图和名称做得更有吸引力</li>
+<li><strong>搭售关联商品</strong>：配件、耗材、替换装——<strong>复购型耗材是最好的搭售品</strong></li>
+<li><strong>多件优惠</strong>：第二件半价这类机制</li>
+</ul>
+<p><strong>判断标准</strong>：加客单的动作不要影响转化率。如果加了套装反而没人买了，说明门槛设太高或者组合不吸引人。</p>
+<hr />
+<h2>7. 分场景打法</h2>
+<h3>7.1 新店破零期（0—2 周）</h3>
+<ul>
+<li><strong>目标</strong>：跑出数据，找到能推的款</li>
+<li><strong>预算</strong>：最低档，宁可少不可多</li>
+<li><strong>重点工具</strong>：搜索型为主</li>
+<li><strong>关键动作</strong>：先补评价，再测图，再测款</li>
+<li><strong>心态</strong>：这个阶段花的钱是"学费"，不要指望产出比好看</li>
+</ul>
+<h3>7.2 稳定放量期（2 周—2 个月）</h3>
+<ul>
+<li><strong>目标</strong>：把跑通的款放大</li>
+<li><strong>预算</strong>：逐步爬楼梯</li>
+<li><strong>重点工具</strong>：搜索型稳盘 + 推荐型拉量</li>
+<li><strong>关键动作</strong>：每个款单独设目标产出比，跌破就退档</li>
+<li><strong>注意</strong>：这个阶段最容易因为贪婪而崩盘。<strong>加预算的节奏一定要慢。</strong></li>
+</ul>
+<h3>7.3 活动冲刺期</h3>
+<ul>
+<li><strong>目标</strong>：抢排名、拿活动流量</li>
+<li><strong>预算</strong>：临时提高，但要<strong>提前锁定上限</strong></li>
+<li><strong>关键动作</strong>：活动前 2—3 天开始加预算养计划，活动期间全开</li>
+<li><strong>注意</strong>：活动期间的亏损要在预算里提前预留，不要活动完了才发现亏了</li>
+</ul>
+<h3>7.4 清库存期</h3>
+<ul>
+<li><strong>目标</strong>：回笼资金，不为利润</li>
+<li><strong>打法</strong>：低价 + 推荐型流量，不投搜索型的贵词</li>
+<li><strong>注意</strong>：清库存不要把店铺主力款的价格带打乱。<strong>最好用独立的链接去清，不要用主链接降价。</strong></li>
+</ul>
+<h3>7.5 遇到竞品价格战</h3>
+<ul>
+<li><strong>别第一时间跟着降</strong>。先判断对方是不是在清库存或者短期活动</li>
+<li>如果不能不打，<strong>用赠品、加量、套装做价值对比</strong>，比直接降价的伤害小</li>
+<li>记住了：<strong>你能打的价格战，对方也能打；打到最后的赢家是成本最低的那个，不是你</strong></li>
+</ul>
+<hr />
+<h2>8. 每日推广检视清单（照着念一遍）</h2>
+<p>每天 10 分钟，回答这 6 个问题：</p>
+<ul>
+<li>[ ] 昨天花了多少钱？出了多少单？产出比是多少？在目标线以上吗？</li>
+<li>[ ] 有没有哪个计划的花费突然涨了或者掉了？（异常比绝对值更重要）</li>
+<li>[ ] 有没有哪个计划连续 3 天低于目标产出比？（该处理了）</li>
+<li>[ ] 有没有哪个词/人群一直在花钱但不出单？（该砍了）</li>
+<li>[ ] 我昨天改了什么东西？改完的数据有没有变化？</li>
+<li>[ ] 今天有没有什么该做的动作（补评价、改图、报活动）？</li>
+</ul>
+<p><strong>如果这 6 个问题里有 3 个回答不上来，说明你的数据看板没搭好。</strong> 先把看数据的习惯建立起来，比学任何技巧都重要。</p>
+<hr />
+<h2>9. 最后：关于投流的三条底层认知</h2>
+<p><strong>第一，投流是放大镜，不是发动机。</strong><br />
+它能放大你已有的转化能力，不能创造转化能力。转化率 1% 的链接，投再多钱还是 1%。</p>
+<p><strong>第二，先算账，再投钱。</strong><br />
+投之前先算清楚：我的成本是多少、目标产出比是多少、按这个产出比我能承受多大的预算。<strong>没算账就投钱，等于闭着眼开车。</strong></p>
+<p><strong>第三，快钱来得快，去得也快。</strong><br />
+平台流量有波动是常态。<strong>能活下来的店，都是靠产品和服务，不是靠某个投流技巧。</strong> 技巧只是让你少交学费，不改变生意的本质。</p>
+<hr />
+<blockquote>
+<p>下一篇：<strong>《引流玩法与增长思路》</strong>——免费流量、活动、直播、达人、站外、私域、裂变，以及按预算分档的组合打法。</p>
+</blockquote>
+</main>
+<footer>
+  AI 作品集 · 网盘备份 <code>/作品集/07-电商/02-投流推广实战手册.md</code>
+</footer>
+</body>
+</html>
