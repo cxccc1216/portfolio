@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>拼多多投流盈亏计算器</title>
+<style>
+:root{
+  --bg:#f4f5f7; --card:#fff; --bd:#e3e5e9; --bd2:#d3d6db;
+  --tx:#1c1f23; --tx2:#6b7280; --tx3:#9aa1ab;
+  --pri:#185fa5; --good:#0f6e56; --warn:#ba7517; --bad:#a32d2d;
+  --goodbg:#e1f5ee; --warnbg:#faeeda; --badbg:#fcebeb; --pribg:#e6f1fb;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--bg); color:var(--tx);
+  font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+  font-size:14px; line-height:1.6;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 20px 64px;}
+h1{font-size:20px;font-weight:600;margin:0 0 6px;}
+.sub{color:var(--tx2);font-size:13px;margin:0 0 24px;}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:20px;}
+.grid{display:grid;grid-template-columns:360px 1fr;gap:18px;align-items:start;margin-bottom:18px;}
+@media(max-width:920px){.grid{grid-template-columns:1fr;}}
+h2{font-size:14px;font-weight:600;margin:0 0 14px;color:var(--tx);}
+h3{font-size:13px;font-weight:600;margin:18px 0 8px;color:var(--tx2);}
+h3:first-child{margin-top:0;}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px;}
+.row label{color:var(--tx2);font-size:13px;flex:1;}
+.field{position:relative;width:132px;flex:0 0 auto;}
+.field input{
+  width:100%;padding:7px 34px 7px 10px;border:1px solid var(--bd2);border-radius:7px;
+  font-size:13px;font-family:inherit;color:var(--tx);background:#fff;text-align:right;
+  outline:none;
+}
+.field input:focus{border-color:var(--pri);box-shadow:0 0 0 3px rgba(24,95,165,.12);}
+.field .u{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--tx3);font-size:12px;pointer-events:none;}
+.divider{height:1px;background:var(--bd);margin:16px 0;}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:560px){.cards{grid-template-columns:repeat(2,1fr);}}
+.kpi{border:1px solid var(--bd);border-radius:9px;padding:13px 14px;background:#fbfbfc;}
+.kpi .k{font-size:12px;color:var(--tx2);margin-bottom:5px;white-space:nowrap;}
+.kpi .v{font-size:21px;font-weight:600;letter-spacing:-.3px;}
+.kpi .v small{font-size:12px;font-weight:400;color:var(--tx3);margin-left:3px;}
+.kpi.hi{background:var(--pribg);border-color:#b5d4f4;}
+.kpi.hi .v{color:var(--pri);}
+.v-good{color:var(--good);} .v-warn{color:var(--warn);} .v-bad{color:var(--bad);}
+.verdict{border-radius:12px;padding:18px 20px;margin-bottom:18px;border:1px solid;}
+.verdict .vt{font-size:15px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.tag{font-size:12px;font-weight:500;padding:2px 9px;border-radius:20px;border:1px solid currentColor;}
+.vd-good{background:var(--goodbg);border-color:#9fe1cb;} .vd-good .vt{color:#04342c;}
+.vd-warn{background:var(--warnbg);border-color:#fac775;} .vd-warn .vt{color:#412402;}
+.vd-bad{background:var(--badbg);border-color:#f7c1c1;} .vd-bad .vt{color:#501313;}
+.verdict ul{margin:0;padding-left:18px;}
+.verdict li{margin-bottom:7px;}
+.verdict li:last-child{margin-bottom:0;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--bd);}
+th{color:var(--tx2);font-weight:500;font-size:12px;background:#fbfbfc;}
+th:first-child,td:first-child{text-align:left;}
+tr.be{background:var(--warnbg);}
+tr.tg{background:var(--goodbg);}
+tr.neg td{color:var(--bad);}
+.note{font-size:12.5px;color:var(--tx2);}
+.note li{margin-bottom:5px;}
+.note ol{padding-left:18px;margin:0;}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:20px;}
+button{
+  padding:8px 16px;border:1px solid var(--bd2);border-radius:8px;background:#fff;color:var(--tx);
+  font-size:13px;font-family:inherit;cursor:pointer;
+}
+button:hover{background:#f0f2f5;}
+button:active{transform:translateY(1px);}
+.hint{font-size:12px;color:var(--tx3);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>投流盈亏计算器</h1>
+  <p class="sub">按"每单发货"口径摊销全部成本与退货损耗，算出你能承受的推广花费和保本 ROI。</p>
+
+  <div class="grid">
+    <section class="card">
+      <h2>成本与目标</h2>
+
+      <h3>商品成本</h3>
+      <div class="row"><label>售价（实际成交价）</label><div class="field"><input id="price" type="number" step="0.1" value="39.9"><span class="u">元</span></div></div>
+      <div class="row"><label>拿货价 / 进货成本</label><div class="field"><input id="cost" type="number" step="0.1" value="18"><span class="u">元</span></div></div>
+      <div class="row"><label>包装耗材</label><div class="field"><input id="pack" type="number" step="0.1" value="0.8"><span class="u">元</span></div></div>
+
+      <div class="divider"></div>
+      <h3>物流</h3>
+      <div class="row"><label>发货运费（每单发出）</label><div class="field"><input id="ship" type="number" step="0.1" value="3.5"><span class="u">元</span></div></div>
+      <div class="row"><label>退货率</label><div class="field"><input id="rrate" type="number" step="0.5" value="8"><span class="u">%</span></div></div>
+      <div class="row"><label>每单退货额外承担</label><div class="field"><input id="rcost" type="number" step="0.5" value="4"><span class="u">元</span></div></div>
+
+      <div class="divider"></div>
+      <h3>平台与目标</h3>
+      <div class="row"><label>平台扣点</label><div class="field"><input id="feerate" type="number" step="0.1" value="0.6"><span class="u">%</span></div></div>
+      <div class="row"><label>其他成本（人工 / 赠品等）</label><div class="field"><input id="other" type="number" step="0.1" value="0"><span class="u">元</span></div></div>
+      <div class="row"><label>目标净利率</label><div class="field"><input id="targetnet" type="number" step="1" value="10"><span class="u">%</span></div></div>
+      <div class="row"><label>我的实际 ROI</label><div class="field"><input id="actualroi" type="number" step="0.1" value="3"><span class="u">倍</span></div></div>
+    </section>
+
+    <section>
+      <div class="card" style="margin-bottom:18px;">
+        <h2>测算结果</h2>
+        <div class="cards">
+          <div class="kpi hi">
+            <div class="k">每单最大可花推广费</div>
+            <div class="v" id="r-maxad">—</div>
+          </div>
+          <div class="kpi">
+            <div class="k">保本 ROI</div>
+            <div class="v" id="r-be">—</div>
+          </div>
+          <div class="kpi">
+            <div class="k">目标 ROI</div>
+            <div class="v" id="r-tg">—</div>
+          </div>
+          <div class="kpi">
+            <div class="k">单件毛利（不含推广）</div>
+            <div class="v" id="r-gross">—</div>
+          </div>
+          <div class="kpi">
+            <div class="k">毛利率</div>
+            <div class="v" id="r-grossrate">—</div>
+          </div>
+          <div class="kpi">
+            <div class="k">实际成交额 / 发货单</div>
+            <div class="v" id="r-rev">—</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="cards">
+          <div class="kpi">
+            <div class="k">单件综合成本</div>
+            <div class="v" id="r-totalcost">—</div>
+          </div>
+          <div class="kpi">
+            <div class="k">按目标净利率可花</div>
+            <div class="v" id="r-recad">—</div>
+          </div>
+          <div class="kpi">
+            <div class="k">按我的实际 ROI</div>
+            <div class="v" id="r-actual">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="verdict-card">
+        <div class="vt" id="v-title">—</div>
+        <ul id="v-list"></ul>
+      </div>
+    </section>
+  </div>
+
+  <section class="card" style="margin-bottom:18px;">
+    <h2>ROI 敏感度：不同投产比下的真实利润</h2>
+    <table>
+      <thead>
+        <tr><th>投产比 ROI</th><th>每单推广费</th><th>每单净利</th><th>净利率</th><th>状态</th></tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="foot">
+      <span class="hint">橙色行 = 保本线，绿色行 = 达到你的目标净利率</span>
+      <button id="copy">复制测算结果</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>口径说明（先看这个，不然数字会对不上）</h2>
+    <ol class="note">
+      <li><b>计算口径是"每单发货"</b>：把会退货的订单也算进来摊销成本。退货单同样产生了推广花费和发货运费，这是最容易算漏的一块。</li>
+      <li><b>ROI 按"实际成交额（扣退款后）÷ 推广费"计算</b>，属于保守口径。如果后台是按下单口径（含后续退款的订单）显示的，数字会偏大一点，按本工具的保本线执行不会吃亏。</li>
+      <li><b>退货假设商品可再次销售</b>，所以只计退货带来的运费和包装损失。如果退回的货会报废，把"每单退货额外承担"填成约等于拿货价即可。</li>
+      <li><b>平台扣点按实际成交额算</b>；部分类目交易完成后退款仍可能收技术服务费，如果你的类目是这样，把扣点调高一点更保险。</li>
+      <li><b>未包含</b>：人工、仓储、平台其他费用、赠品。有的话填进"其他成本"。</li>
+      <li>扣点比例、运费、退货率请以你后台数据和物流报价为准，这里的初始值是示例，不是行业标准。</li>
+    </ol>
+  </section>
+</div>
+
+<script>
+const ids = ['price','cost','pack','ship','rrate','rcost','feerate','other','targetnet','actualroi'];
+const el = id => document.getElementById(id);
+const num = id => { const v = parseFloat(el(id).value); return isFinite(v) ? v : 0; };
+const money = n => {
+  if (!isFinite(n)) return '—';
+  return (n < 0 ? '-¥' + Math.abs(n).toFixed(2) : '¥' + n.toFixed(2));
+};
+const pct = n => (isFinite(n) ? (n * 100).toFixed(1) + '%' : '—');
+
+function calc(){
+  const price = num('price');
+  const cost = num('cost');
+  const pack = num('pack');
+  const ship = num('ship');
+  const rRate = Math.min(1, Math.max(0, num('rrate') / 100));
+  const rCost = num('rcost');
+  const feeRate = num('feerate') / 100;
+  const other = num('other');
+  const targetNet = num('targetnet') / 100;
+
+  const keep = 1 - rRate;
+
+  // 每单发货口径
+  const revenue = keep * price;              // 实际留下的成交额
+  const goods = keep * cost;                 // 实际留下的货成本
+  const platformFee = revenue * feeRate;
+  const returnLoss = rRate * rCost;
+  const totalCost = goods + pack + ship + returnLoss + platformFee + other;
+  const gross = revenue - totalCost;         // 毛利（不含推广）
+  const grossRate = revenue > 0 ? gross / revenue : 0;
+
+  const maxAd = gross;                       // 保本时可花的推广费
+  const targetProfit = revenue * targetNet;
+  const recAd = gross - targetProfit;        // 达到目标净利率时可花的推广费
+  const beROI = gross > 0 ? revenue / gross : NaN;
+  const tgROI = recAd > 0 ? revenue / recAd : NaN;
+
+  // 渲染 KPI
+  el('r-maxad').textContent = money(maxAd);
+  el('r-be').textContent = isFinite(beROI) ? beROI.toFixed(2) : '无法保本';
+  el('r-tg').textContent = isFinite(tgROI) ? tgROI.toFixed(2) : '目标不可达';
+  el('r-gross').textContent = money(gross);
+  el('r-grossrate').textContent = pct(grossRate);
+  el('r-rev').textContent = money(revenue);
+  el('r-totalcost').textContent = money(totalCost);
+  el('r-recad').textContent = recAd > 0 ? money(recAd) : '已为负';
+  el('r-grossrate').className = 'v ' + tone(grossRate);
+  el('r-gross').className = 'v ' + tone(grossRate);
+
+  // 实际 ROI 下的利润
+  const roi = num('actualroi');
+  const adPerOrder = roi > 0 ? revenue / roi : revenue;
+  const netProfit = gross - adPerOrder;
+  const netRate = revenue > 0 ? netProfit / revenue : 0;
+  const aEl = el('r-actual');
+  aEl.innerHTML = money(netProfit) + '<small>' + pct(netRate) + '</small>';
+  aEl.className = 'v ' + tone(netRate);
+
+  // 敏感度表
+  const steps = [1.5,2,2.5,3,3.5,4,4.5,5,6,7,8];
+  let rows = '';
+  steps.forEach(r => {
+    const ad = revenue / r;
+    const np = gross - ad;
+    const rate = revenue > 0 ? np / revenue : 0;
+    let cls = np < 0 ? 'neg' : '';
+    if (isFinite(beROI) && Math.abs(r - beROI) < 0.26) cls = 'be';
+    if (isFinite(tgROI) && Math.abs(r - tgROI) < 0.26) cls = 'tg';
+    rows += '<tr class="' + cls + '">' +
+      '<td>' + r.toFixed(1) + '</td>' +
+      '<td>' + money(ad) + '</td>' +
+      '<td>' + money(np) + '</td>' +
+      '<td>' + pct(rate) + '</td>' +
+      '<td>' + (np >= 0 ? '盈利' : '亏损') + '</td>' +
+      '</tr>';
+  });
+  el('tbody').innerHTML = rows;
+
+  renderVerdict({grossRate, rRate, ship, price, cost, feeRate, targetNet, revenue, gross, recAd, beROI, tgROI});
+}
+
+function tone(rate){
+  if (rate <= 0.001) return 'v-bad';
+  if (rate < 0.15) return 'v-bad';
+  if (rate < 0.25) return 'v-warn';
+  return 'v-good';
+}
+
+function renderVerdict(d){
+  const card = el('verdict-card');
+  let level, title, tag;
+  const gr = d.grossRate;
+
+  if (gr <= 0){
+    level = 'vd-bad'; title = '投流空间：没有，现在是亏本结构'; tag = '先解决成本';
+  } else if (gr < 0.15){
+    level = 'vd-bad'; title = '投流空间：很小'; tag = '慎投';
+  } else if (gr < 0.25){
+    level = 'vd-warn'; title = '投流空间：偏紧'; tag = '卡住 ROI';
+  } else if (gr < 0.35){
+    level = 'vd-good'; title = '投流空间：正常'; tag = '按目标执行';
+  } else {
+    level = 'vd-good'; title = '投流空间：充足'; tag = '可以进攻';
+  }
+
+  const list = [];
+
+  if (gr <= 0){
+    list.push('按现在的成本和售价，<b>不投推广都不赚钱</b>。这时候投流只会亏得更快，先把成本或价格解决掉。');
+    list.push('优先看两处：拿货价能不能降（换渠道或换款），或者售价能不能提（加价值点、换规格、做套装而不是直接涨价）。');
+    list.push('费用表里最快能砍的是：运费（换物流或提高客单凑包邮）、退货率（降一半就少亏很多）。');
+  } else if (gr < 0.15){
+    list.push('每单最多只能花 <b>' + money(d.maxAd) + '</b> 推广费，保本 ROI 要到 <b>' + d.beROI.toFixed(2) + '</b>。这个线很窄，一次投放失误就把利润吃掉了。');
+    list.push('这个阶段不要打价格战，也不要用大预算去试错。用小预算测图、测款，跑通一个再放量。');
+    list.push('重心放在<b>提高客单价</b>：加套装、设满减。客单价提上去，同一笔推广费能带回更多成交额，这是不花钱就能改善 ROI 的路子。');
+  } else if (gr < 0.25){
+    list.push('每单最多可花 <b>' + money(d.maxAd) + '</b> 推广费，保本 ROI <b>' + d.beROI.toFixed(2) + '</b>。空间是有的，但没有挥霍余地。');
+    list.push('按目标净利率 ' + pct(d.targetNet) + ' 执行的话，每单推广费要控制在 <b>' + (d.recAd > 0 ? money(d.recAd) : '无法达成') + '</b> 以内，对应 ROI <b>' + (isFinite(d.tgROI) ? d.tgROI.toFixed(2) : '—') + '</b>。');
+    list.push('提效的重点是<b>点击率</b>（改主图，成本几乎为零）和<b>转化率</b>（补评价）。这两个提上来，等于白捡利润。');
+  } else if (gr < 0.35){
+    list.push('每单最多可花 <b>' + money(d.maxAd) + '</b> 推广费，保本 ROI <b>' + d.beROI.toFixed(2) + '</b>。这是个健康的区间，可以正常投放。');
+    list.push('建议按 ROI <b>' + (isFinite(d.tgROI) ? d.tgROI.toFixed(2) : '—') + '</b> 作为目标线来管计划，跌破就退档，不要死磕。');
+    list.push('这个阶段可以开始做组合：搜索型稳住基本盘，推荐型拉量，活动配合冲排名。');
+  } else {
+    list.push('每单最多可花 <b>' + money(d.maxAd) + '</b> 推广费，保本 ROI 只要 <b>' + d.beROI.toFixed(2) + '</b>。容错空间大，可以主动一些。');
+    list.push('建议留出目标利润后按 ROI <b>' + (isFinite(d.tgROI) ? d.tgROI.toFixed(2) : '—') + '</b> 投放，剩下的空间用来测试新图、新款、新人群。');
+    list.push('但别急着把预算拉满：<b>先测图和测款，找到跑得动的款再放量</b>。成本优势不该浪费在没验证过的商品上。');
+  }
+
+  // 结构性诊断
+  if (d.rRate >= 0.15){
+    list.push('退货率 ' + pct(d.rRate) + ' 偏高，大约每 ' + Math.round(1 / d.rRate) + ' 单就要退 1 单。先去查原因（图和实物不符、规格写不清、质量问题），退货率每降 5 个点，每单毛利能多出约 ' + money(0.05 * (d.price - d.cost) + 0.05 * num('rcost')) + '。');
+  }
+  if (d.price > 0 && d.ship / d.price >= 0.12){
+    list.push('运费占售价 ' + pct(d.ship / d.price) + '，占比偏高。考虑提高客单凑包邮门槛、换物流，或者用套装把运费摊薄。');
+  }
+  if (d.price > 0 && d.cost / d.price >= 0.7){
+    list.push('拿货价占售价 ' + pct(d.cost / d.price) + '，采购成本偏重。试着找源头、换款，或者用规格组合把客单做上去摊薄这个比例。');
+  }
+  if (d.feeRate >= 0.03){
+    list.push('平台扣点 ' + pct(d.feeRate) + ' 不低，定价时务必先把这块留出来，别按零扣点算账。');
+  }
+  if (d.targetNet >= d.grossRate && d.grossRate > 0){
+    list.push('目标净利率 ' + pct(d.targetNet) + ' 已经接近或超过毛利率 ' + pct(d.grossRate) + '，光靠现在这个价格结构达不到。要么下调目标，要么先改善成本。');
+  }
+  if (d.grossRate > 0 && d.recAd <= 0){
+    list.push('按目标净利率算下来推广费已经是负数，说明<b>不投流都达不到这个净利率</b>。先降目标或改成本结构。');
+  }
+
+  card.className = 'card verdict ' + level;
+  el('v-title').innerHTML = title + ' <span class="tag">' + tag + '</span>';
+  el('v-list').innerHTML = list.map(t => '<li>' + t + '</li>').join('');
+}
+
+el('copy').addEventListener('click', () => {
+  const t = [
+    '投流盈亏测算',
+    '售价：' + money(num('price')) + '｜拿货价：' + money(num('cost')) + '｜运费：' + money(num('ship')) + '｜包装：' + money(num('pack')),
+    '退货率：' + num('rrate') + '%｜平台扣点：' + num('feerate') + '%｜其他成本：' + money(num('other')),
+    '----------------------------------------',
+    '每单最大可花推广费：' + el('r-maxad').textContent,
+    '保本 ROI：' + el('r-be').textContent,
+    '目标 ROI（净利率 ' + num('targetnet') + '%）：' + el('r-tg').textContent,
+    '单件毛利：' + el('r-gross').textContent + '｜毛利率：' + el('r-grossrate').textContent,
+    '单件综合成本：' + el('r-totalcost').textContent + '｜实际成交额/发货单：' + el('r-rev').textContent,
+    '按实际 ROI ' + num('actualroi') + '：' + el('r-actual').textContent,
+    '----------------------------------------',
+    '结论：' + el('v-title').textContent
+  ].join('\n');
+  navigator.clipboard.writeText(t).then(() => {
+    const b = el('copy');
+    const old = b.textContent;
+    b.textContent = '已复制';
+    setTimeout(() => b.textContent = old, 1500);
+  }).catch(() => {
+    alert('复制失败，请手动选择表格内容复制。');
+  });
+});
+
+ids.forEach(id => {
+  el(id).addEventListener('input', calc);
+});
+calc();
+</script>
+</body>
+</html>
